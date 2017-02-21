@@ -1,0 +1,9 @@
+[package]
+name = "zcash"
+version = "0.1.0"
+authors = ["Durga <DurgaMa@users.noreply.github.com>"]
+
+[[bin]]
+name = "zclash-cli"
+
+[dependencies]
