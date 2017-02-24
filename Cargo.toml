@@ -8,7 +8,7 @@ homepage = "https://github.com/DurgaMa/rust-zcash"
 repository = "https://github.com/DurgaMa/rust-zcash"
 
 readme = "README.md"
-license = "MIT"
+license = "Unlicense"
 
 [[bin]]
 name = "zclash-cli"
