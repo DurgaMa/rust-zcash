@@ -1,10 +1,10 @@
-fn main() {
-    if std::env::args().any(|a| a == "--version" || a == "-v") {
-        println!("{}\n", version_message());
-        return;
-    }
-}
+extern crate clap;
 
-fn version_message() -> String {
-    format!("Zcash RPC client version v{}", env!("CARGO_PKG_VERSION"))
+use clap::App;
+
+fn main() {
+    App::new("rust-cli")
+        .version(env!("CARGO_PKG_VERSION"))
+        .about("Zcash RPC Client")
+        .get_matches();
 }

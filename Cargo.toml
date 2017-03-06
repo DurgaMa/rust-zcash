@@ -1,16 +1,15 @@
 [package]
-name = "zcash"
-version = "0.1.0"
 authors = ["Durga <DurgaMa@users.noreply.github.com>"]
-description = "Rust implementation of Zcash CLI and API"
-
+description = "Rust implementation of Zcash CLI"
 homepage = "https://github.com/DurgaMa/rust-zcash"
-repository = "https://github.com/DurgaMa/rust-zcash"
-
-readme = "README.md"
 license = "Unlicense"
+name = "zcash"
+readme = "README.md"
+repository = "https://github.com/DurgaMa/rust-zcash"
+version = "0.1.0"
 
 [[bin]]
 name = "zclash-cli"
 
 [dependencies]
+clap = "2.20.5"
