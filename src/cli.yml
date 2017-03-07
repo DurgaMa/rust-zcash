@@ -1,0 +1,66 @@
+name: zcash-cli
+
+settings:
+    - DeriveDisplayOrder
+    - SubcommandRequired
+    - UnifiedHelpMessage
+    - ColoredHelp
+
+args:
+    - conf:
+        long: conf
+        value_name: file
+        help: Specify configuration file
+        takes_value: true
+        default_value: zcash.conf
+    - datadir:
+        long: datadir
+        value_name: dir
+        help: Specify data directory
+        takes_value: true
+    - testnet:
+        long: testnet
+        help: Use the test network
+    - regtest:
+        long: regtest
+        help: Enter regression test mode, which uses a special chain in which
+            blocks can be solved instantly. This is intended for
+            regression testing tools and app development.
+        conflicts_with:
+            - testnet
+    - rpcconnect:
+        long: rpcconnect
+        value_name: ip
+        help: Send commands to node running on <ip>
+        takes_value: true
+        default_value: 127.0.0.1
+    - rpcport:
+        long: rpcport
+        value_name: port
+        help: Connect to JSON-RPC on <port>
+        takes_value: true
+        default_value: '8232'
+    - rpcwait:
+        long: rpcwait
+        help: Wait for RPC server to start
+    - rpcuser:
+        long: rpcuser
+        value_name: user
+        help:  Username for JSON-RPC connections
+        takes_value: true
+    - rpcpassword:
+        long: rpcpassword
+        value_name: pw
+        help: Password for JSON-RPC connections
+    - rpcssl:
+        long: rpcssl
+        help: Use OpenSSL (https) for JSON-RPC connections
+
+subcommands:
+    - list:
+        about: List subcommands
+    - getblockcount:
+        settings:
+            - Hidden
+        help: "Returns the number of blocks in the longest block
+            chain.\n\nResult:\nn    (numeric) The current block count\n"

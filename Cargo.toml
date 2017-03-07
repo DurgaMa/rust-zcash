@@ -1,6 +1,6 @@
 [package]
 authors = ["Durga <DurgaMa@users.noreply.github.com>"]
-description = "Rust implementation of Zcash CLI"
+description = "Rust Zcash RPC Client"
 homepage = "https://github.com/DurgaMa/rust-zcash"
 license = "Unlicense"
 name = "zcash"
@@ -9,7 +9,7 @@ repository = "https://github.com/DurgaMa/rust-zcash"
 version = "0.1.0"
 
 [[bin]]
-name = "zclash-cli"
+name = "zcash-cli"
 
 [dependencies]
-clap = "2.20.5"
+clap = {version = "2.20.5", features = ["yaml"]}
