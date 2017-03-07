@@ -52,6 +52,7 @@ args:
         long: rpcpassword
         value_name: pw
         help: Password for JSON-RPC connections
+        takes_value: true
     - rpcssl:
         long: rpcssl
         help: Use OpenSSL (https) for JSON-RPC connections
