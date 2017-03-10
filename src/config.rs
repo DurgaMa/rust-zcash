@@ -7,10 +7,10 @@ pub struct Config<'a> {
     rpcssl: bool,
     conf: &'a str,
     datadir: &'a str,
-    rpcconnect: &'a str,
-    rpcport: &'a str,
-    rpcuser: &'a str,
-    rpcpassword: &'a str,
+    pub rpcconnect: &'a str,
+    pub rpcport: &'a str,
+    pub rpcuser: &'a str,
+    pub rpcpassword: &'a str,
 }
 
 impl<'a> Config<'a> {
@@ -30,23 +30,23 @@ impl<'a> Config<'a> {
 
         // Retrieve the flags
         if matches.is_present("testnet") {
-            error!("testnet not implemented yet");
             config.testnet = true;
+            panic!("testnet not implemented yet");
         }
 
         if matches.is_present("regtest") {
-            error!("regtest not implemented yet");
             config.regtest = true;
+            panic!("regtest not implemented yet");
         }
 
         if matches.is_present("rpcwait") {
-            error!("rpcwait not implemented yet");
             config.rpcwait = true;
+            panic!("rpcwait not implemented yet");
         }
 
         if matches.is_present("rpcssl") {
-            error!("rpcssl not implemented yet");
             config.rpcssl = true;
+            panic!("rpcssl not implemented yet");
         }
 
         // Retrieve the other options
@@ -61,22 +61,18 @@ impl<'a> Config<'a> {
         }
 
         if let Some(ref ip) = matches.value_of("rpcconnect") {
-            error!("rpcconnect not implemented yet");
             config.rpcconnect = ip;
         }
 
         if let Some(ref port) = matches.value_of("rpcport") {
-            error!("rpcport not implemented yet");
             config.rpcport = port;
         }
 
         if let Some(ref user) = matches.value_of("rpcuser") {
-            error!("rpcuser not implemented yet");
             config.rpcuser = user;
         }
 
         if let Some(ref pw) = matches.value_of("rpcpassword") {
-            error!("rpcpassword not implemented yet");
             config.rpcpassword = pw;
         }
 
