@@ -1,63 +1,49 @@
 #[macro_use]
 extern crate clap;
 
-#[macro_use]
-extern crate log;
 extern crate env_logger;
 
 extern crate reqwest;
 extern crate hyper;
 
-mod config;
-
-use clap::{App, ArgMatches};
-use config::Config;
-use hyper::header::{Headers, Authorization, Basic};
+use clap::App;
 
 fn main() {
     env_logger::init().unwrap();
-
     let yaml = load_yaml!("cli.yml");
-    let matches = App::from_yaml(yaml)
-        .author(crate_authors!("\n"))
+    App::from_yaml(yaml)
+        .author(crate_authors!())
         .about(crate_description!())
         .version(crate_version!())
         .get_matches();
-
-    if matches.is_present("list") {
-        println!("Show the list of commands!");
-    } else {
-        send_command(&matches);
-    }
 }
 
-fn send_command(matches: &ArgMatches) {
-    let config = Config::new(&matches);
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use reqwest::{Response, Client};
+    use hyper::header::{Headers, Authorization, Basic};
 
-    let mut headers = Headers::new();
-    headers.set(Authorization(Basic {
-        username: config.rpcuser.to_string(),
-        password: Some(config.rpcpassword.to_string()),
-    }));
+    fn get_rpc_response(command: &str) -> reqwest::Result<Response> {
+        let mut headers = Headers::new();
+        headers.set(Authorization(Basic {
+                                      username: "".to_owned(),
+                                      password: Some("".to_owned()),
+                                  }));
 
-    let mut map = std::collections::HashMap::new();
-    map.insert("method", matches.subcommand_name().unwrap());
+        let mut map = std::collections::HashMap::new();
+        map.insert("method", command);
 
-    let client = reqwest::Client::new().unwrap();
-    let res = client.post(&format!("http://{}:{}", config.rpcconnect, config.rpcport))
-        .headers(headers)
-        .json(&map)
-        .send();
+        let client = Client::new().unwrap();
+        client.post("http://127.0.0.1:18232")
+            .headers(headers)
+            .json(&map)
+            .send()
+    }
 
-    match res {
-        Ok(mut res) => {
-            info!("Status: {}", res.status());
-            info!("Headers:\n{}", res.headers());
-
-            ::std::io::copy(&mut res, &mut ::std::io::stdout()).unwrap();
-        }
-        Err(res) => {
-            error!("{}", res);
-        }
+    #[test]
+    fn test_rpc_authentication() {
+        let result = get_rpc_response("help");
+        assert!(result.is_ok());
     }
 }

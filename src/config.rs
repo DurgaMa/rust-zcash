@@ -31,48 +31,48 @@ impl<'a> Config<'a> {
         // Retrieve the flags
         if matches.is_present("testnet") {
             config.testnet = true;
-            panic!("testnet not implemented yet");
+            unimplemented!();
         }
 
         if matches.is_present("regtest") {
             config.regtest = true;
-            panic!("regtest not implemented yet");
+            unimplemented!();
         }
 
         if matches.is_present("rpcwait") {
             config.rpcwait = true;
-            panic!("rpcwait not implemented yet");
+            unimplemented!();
         }
 
         if matches.is_present("rpcssl") {
             config.rpcssl = true;
-            panic!("rpcssl not implemented yet");
+            unimplemented!();
         }
 
         // Retrieve the other options
-        if let Some(ref file) = matches.value_of("conf") {
-            error!("conf not implemented yet");
+        if let Some(file) = matches.value_of("conf") {
             config.conf = file;
+            unimplemented!();
         }
 
-        if let Some(ref dir) = matches.value_of("datadir") {
-            error!("datadir not implemented yet");
+        if let Some(dir) = matches.value_of("datadir") {
             config.datadir = dir;
+            unimplemented!();
         }
 
-        if let Some(ref ip) = matches.value_of("rpcconnect") {
+        if let Some(ip) = matches.value_of("rpcconnect") {
             config.rpcconnect = ip;
         }
 
-        if let Some(ref port) = matches.value_of("rpcport") {
+        if let Some(port) = matches.value_of("rpcport") {
             config.rpcport = port;
         }
 
-        if let Some(ref user) = matches.value_of("rpcuser") {
+        if let Some(user) = matches.value_of("rpcuser") {
             config.rpcuser = user;
         }
 
-        if let Some(ref pw) = matches.value_of("rpcpassword") {
+        if let Some(pw) = matches.value_of("rpcpassword") {
             config.rpcpassword = pw;
         }
 
