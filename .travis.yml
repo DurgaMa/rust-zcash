@@ -1,10 +1,7 @@
 language: rust
 
 before_script:
-    - sudo apt-get install -qq \
-    build-essential pkg-config libc6-dev m4 g++-multilib \
-    autoconf libtool ncurses-dev unzip git python \
-    zlib1g-dev wget bsdmainutils automake
+    - sudo apt-get install -qq build-essential pkg-config libc6-dev m4 g++-multilib autoconf libtool ncurses-dev unzip git python zlib1g-dev wget bsdmainutils automake
     - git clone https://github.com/zcash/zcash.git
     - cd zcash/
     - git checkout v1.0.7-1
