@@ -1,9 +1,13 @@
 language: rust
 
 before_script:
-    - sudo apt-get install -qq apt-transport-https
-    - wget -qO - https://apt.z.cash/zcash.asc | sudo apt-key add -
-    - echo "deb [arch=amd64] https://apt.z.cash/ jessie main" | sudo tee /etc/apt/sources.list.d/zcash.list
-    - sudo apt-get update -qq
-    - sudo apt-get install -qq zcash
+    - sudo apt-get install -qq \
+    build-essential pkg-config libc6-dev m4 g++-multilib \
+    autoconf libtool ncurses-dev unzip git python \
+    zlib1g-dev wget bsdmainutils automake
+    - git clone https://github.com/zcash/zcash.git
+    - cd zcash/
+    - git checkout v1.0.7-1
+#    - ./zcutil/fetch-params.sh
+    - ./zcutil/build.sh -j$(nproc)
     - zcashd --regtest
