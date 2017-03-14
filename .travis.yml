@@ -12,4 +12,5 @@ before_install:
     - sudo apt-get install -y apt-transport-https
     - wget https://apt.z.cash/pool/main/z/zcash/zcash-1.0.7-1-amd64.deb
     - sudo dpkg -i zcash-1.0.7-1-amd64.deb
+    - touch .zcash/zcash.conf
     - zcashd --regtest
