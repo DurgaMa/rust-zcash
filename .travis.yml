@@ -15,4 +15,4 @@ before_install:
     - mkdir /home/travis/.zcash
     - touch /home/travis/.zcash/zcash.conf
     - zcash-fetch-params
-    - zcashd --regtest
+    - zcashd --regtest --daemon
