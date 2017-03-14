@@ -1,6 +1,11 @@
 language: rust
 
-dist: trusty
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - libstdc++-4.9
 
 before_install:
     - sudo apt-get -qq update
