@@ -58,10 +58,5 @@ args:
         help: Use OpenSSL (https) for JSON-RPC connections
 
 subcommands:
-    - list:
+    - help:
         about: List subcommands
-    - getblockcount:
-        settings:
-            - Hidden
-        help: "Returns the number of blocks in the longest block
-            chain.\n\nResult:\nn    (numeric) The current block count\n"

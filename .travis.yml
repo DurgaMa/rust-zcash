@@ -13,6 +13,6 @@ before_install:
     - wget https://apt.z.cash/pool/main/z/zcash/zcash-1.0.7-1-amd64.deb
     - sudo dpkg -i zcash-1.0.7-1-amd64.deb
     - mkdir /home/travis/.zcash
-    - touch /home/travis/.zcash/zcash.conf
+    - cp tests/zcash.conf /home/travis/.zcash/
     - zcash-fetch-params
-    - zcashd --regtest --daemon
+    - zcashd --daemon
