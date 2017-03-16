@@ -11,12 +11,11 @@ pub struct JsonRpc {
     pub id: String,
 }
 
-fn get_rpc_response(command: &str) -> reqwest::Result<Response> {
+fn get_rpc_response(command: &str, user: &str, pw: &str) -> reqwest::Result<Response> {
     let mut headers = Headers::new();
     headers.set(Authorization(Basic {
-                                  username: "regtest-user".to_owned(),
-                                  password: Some("PpNWU2FiuUUFeMOT7opeylpwLEJKoI1SUwgPwIVwj7c="
-                                                     .to_owned()),
+                                  username: user.to_owned(),
+                                  password: Some(pw.to_owned()),
                               }));
 
     let mut map = ::std::collections::HashMap::new();
@@ -29,8 +28,8 @@ fn get_rpc_response(command: &str) -> reqwest::Result<Response> {
         .send()
 }
 
-pub fn get_json_response(command: &str) -> reqwest::Result<JsonRpc> {
-    get_rpc_response(command)?.json()
+pub fn get_json_response(command: &str, user: &str, pw: &str) -> reqwest::Result<JsonRpc> {
+    get_rpc_response(command, user, pw)?.json()
 }
 
 #[cfg(test)]
@@ -39,7 +38,9 @@ mod tests {
 
     #[test]
     fn test_help_response_not_empty() {
-        let json_response: reqwest::Result<JsonRpc> = get_json_response("help");
+        let json_response = get_json_response("help",
+                                              "regtest-user",
+                                              "PpNWU2FiuUUFeMOT7opeylpwLEJKoI1SUwgPwIVwj7c=");
         assert!(json_response.is_ok());
 
         let result = json_response.unwrap();

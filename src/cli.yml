@@ -5,6 +5,7 @@ settings:
     - SubcommandRequired
     - UnifiedHelpMessage
     - ColoredHelp
+    - AllowExternalSubcommands
 
 args:
     - conf:

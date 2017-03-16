@@ -1,81 +1,49 @@
 use clap::ArgMatches;
 
-pub struct Config<'a> {
+#[derive(Builder, Debug)]
+pub struct Config {
     testnet: bool,
     regtest: bool,
     rpcwait: bool,
     rpcssl: bool,
-    conf: &'a str,
-    datadir: &'a str,
-    pub rpcconnect: &'a str,
-    pub rpcport: &'a str,
-    pub rpcuser: &'a str,
-    pub rpcpassword: &'a str,
+    conf: String,
+    datadir: String,
+    rpcconnect: String,
+    rpcport: String,
+    pub rpcuser: String,
+    pub rpcpassword: String,
 }
 
-impl<'a> Config<'a> {
-    pub fn new(matches: &'a ArgMatches) -> Config<'a> {
-        let mut config = Config {
-            testnet: false,
-            regtest: false,
-            rpcwait: false,
-            rpcssl: false,
-            conf: "zcash.conf",
-            datadir: "",
-            rpcconnect: "127.0.0.1",
-            rpcport: "8232",
-            rpcuser: "",
-            rpcpassword: "",
-        };
+impl Config {
+    pub fn load_config_from_args(matches: &ArgMatches) -> Result<Config, String> {
+        ConfigBuilder::default()
+            .testnet(matches.is_present("testnet"))
+            .regtest(matches.is_present("regtest"))
+            .rpcwait(matches.is_present("rpcwait"))
+            .rpcssl(matches.is_present("rpc_ssl"))
+            .conf(matches.value_of("conf").unwrap_or(""))
+            .datadir(matches.value_of("datadir").unwrap_or(""))
+            .rpcconnect(matches.value_of("rpcconnect").unwrap_or(""))
+            .rpcport(matches.value_of("rpcport").unwrap_or(""))
+            .rpcuser(matches.value_of("rpcuser").unwrap_or(""))
+            .rpcpassword(matches.value_of("rpcpassword").unwrap_or(""))
+            .build()
+    }
+}
 
-        // Retrieve the flags
-        if matches.is_present("testnet") {
-            config.testnet = true;
-            unimplemented!();
-        }
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use clap::{App, AppSettings};
 
-        if matches.is_present("regtest") {
-            config.regtest = true;
-            unimplemented!();
-        }
-
-        if matches.is_present("rpcwait") {
-            config.rpcwait = true;
-            unimplemented!();
-        }
-
-        if matches.is_present("rpcssl") {
-            config.rpcssl = true;
-            unimplemented!();
-        }
-
-        // Retrieve the other options
-        if let Some(file) = matches.value_of("conf") {
-            config.conf = file;
-            unimplemented!();
-        }
-
-        if let Some(dir) = matches.value_of("datadir") {
-            config.datadir = dir;
-            unimplemented!();
-        }
-
-        if let Some(ip) = matches.value_of("rpcconnect") {
-            config.rpcconnect = ip;
-        }
-
-        if let Some(port) = matches.value_of("rpcport") {
-            config.rpcport = port;
-        }
-
-        if let Some(user) = matches.value_of("rpcuser") {
-            config.rpcuser = user;
-        }
-
-        if let Some(pw) = matches.value_of("rpcpassword") {
-            config.rpcpassword = pw;
-        }
-
-        config
+    #[test]
+    fn create_default_config() {
+        let yaml = load_yaml!("cli.yml");
+        let matches =
+            App::from_yaml(yaml).unset_setting(AppSettings::SubcommandRequired).get_matches();
+        let config = Config::load_config_from_args(&matches).unwrap();
+        assert_eq!(config.conf, "zcash.conf");
+        assert_eq!(config.rpcconnect, "127.0.0.1");
+        assert_eq!(config.rpcport, "8232");
     }
 }

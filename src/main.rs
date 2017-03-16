@@ -8,9 +8,14 @@ extern crate serde_derive;
 extern crate log;
 extern crate env_logger;
 
+#[macro_use]
+extern crate derive_builder;
+
 mod rpc;
+mod config;
 
 use clap::App;
+use config::Config;
 
 fn main() {
     env_logger::init().unwrap();
@@ -22,8 +27,10 @@ fn main() {
         .version(crate_version!())
         .get_matches();
 
-    if matches.is_present("help") {
-        let response = rpc::get_json_response("help");
+    let config = Config::load_config_from_args(&matches).unwrap();
+
+    if let Some(subcommand) = matches.subcommand_name() {
+        let response = rpc::get_json_response(subcommand, &config.rpcuser, &config.rpcpassword);
         match response {
             Ok(json) => println!("{}", json.result),
             Err(err) => error!("{}", err),
