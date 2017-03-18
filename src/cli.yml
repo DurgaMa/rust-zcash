@@ -13,7 +13,6 @@ args:
         value_name: file
         help: Specify configuration file
         takes_value: true
-        default_value: zcash.conf
     - datadir:
         long: datadir
         value_name: dir
@@ -34,13 +33,11 @@ args:
         value_name: ip
         help: Send commands to node running on <ip>
         takes_value: true
-        default_value: 127.0.0.1
     - rpcport:
         long: rpcport
         value_name: port
         help: Connect to JSON-RPC on <port>
         takes_value: true
-        default_value: '8232'
     - rpcwait:
         long: rpcwait
         help: Wait for RPC server to start
